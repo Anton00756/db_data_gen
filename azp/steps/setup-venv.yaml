@@ -1,0 +1,19 @@
+parameters:
+  additionalPoetryArgs: ""
+
+steps:
+  - bash: |
+      set -ex
+      virtualenv --symlinks venv
+      . venv/bin/activate
+      python3 -m pip install poetry==$(POETRY_VERSION)
+      python3 -m pip install poetry-dynamic-versioning[plugin]
+      python3 -m poetry config virtualenvs.create false
+      python3 -m poetry install --no-interaction --no-ansi ${{ parameters.additionalPoetryArgs }}
+
+    displayName: Prepare venv
+    env:
+      PIP_INDEX_URL: $(CORP_PYPI_REPO_URL)
+      PIP_EXTRA_INDEX_URL: $(CORP_PYPI_LOCAL_REPO_URL)
+      PIP_TRUSTED_HOST: $(CORP_PYPI_REPO_TRUSTED_HOST)
+      REQUESTS_CA_BUNDLE: /etc/ssl/certs

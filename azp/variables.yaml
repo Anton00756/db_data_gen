@@ -1,0 +1,7 @@
+variables:
+  CORP_PYPI_REPO_URL: https://repository.avp.ru/artifactory/api/pypi/r-pip/simple
+  CORP_PYPI_LOCAL_REPO_URL: https://repository.avp.ru/artifactory/api/pypi/r-pip-artifactory-pypi-kos-local/simple
+  CORP_PYPI_REPO_TRUSTED_HOST: repository.avp.ru
+  KOS_LOCAL_REPO_URL: https://artifactory.artifacts.avp.ru:443/artifactory/api/pypi/pypi-kos-local/
+  POETRY_VERSION: 1.8.4
+  WORKING_DIRECTORY: $(System.DefaultWorkingDirectory)

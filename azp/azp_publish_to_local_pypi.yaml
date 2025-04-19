@@ -1,0 +1,48 @@
+resources:
+  repositories:
+    - repository: self
+      clean: true
+
+trigger:
+  tags:
+    include:
+      - refs/tags/v*
+
+jobs:
+  - job: build_and_upload
+
+    pool:
+      name: KOS-PLATFORM
+      demands: SERVER_ROLE -equals kos-infra-utils
+
+    variables:
+      - template: /azp/variables.yaml
+
+    workspace:
+      clean: all
+
+    steps:
+
+      - checkout: self
+        path: s
+
+      - template: /azp/steps/setup-venv.yaml
+        parameters:
+          additionalPoetryArgs: --only=build
+
+      - bash: |
+          . venv/bin/activate
+          poetry build -f wheel
+          version=$(poetry version -s)
+          echo "##vso[build.updatebuildnumber]${version}"
+        displayName: Build package
+
+      - template: /azp/steps/upload-to-pypi.yaml
+        parameters:
+          repositoryUrl: $(KOS_LOCAL_REPO_URL)
+
+      - template: /azp/steps/upload-to-pypi.yaml
+        parameters:
+          repositoryUrl: https://repository.avp.ru:443/artifactory/api/pypi/fwaas-pypi/
+
+      - template: /azp/steps/clean-job-env.yaml

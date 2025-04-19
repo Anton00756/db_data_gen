@@ -1,0 +1,14 @@
+parameters:
+  repositoryUrl: ""
+
+steps:
+  - bash: |
+        . venv/bin/activate
+        python3 -m twine upload dist/*
+    displayName: upload to kos-local
+    env: 
+      TWINE_USERNAME: $(FT_KOS_BOT_SMB_USERNAME)
+      TWINE_PASSWORD: $(FT_KOS_BOT_PASSWORD) # not_a_secret
+      TWINE_REPOSITORY_URL: ${{ parameters.repositoryUrl }}
+      TWINE_NON_INTERACTIVE: 1
+      REQUESTS_CA_BUNDLE: /etc/ssl/certs

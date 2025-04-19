@@ -1,0 +1,7 @@
+steps:
+  - bash: |
+      set -ex
+      cd $(System.DefaultWorkingDirectory)
+      rm -rf `ls -A`
+    displayName: Clean up working directory
+    condition: always()
