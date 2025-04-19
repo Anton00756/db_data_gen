@@ -483,7 +483,7 @@ name = "db_data_gen"
 version = "0.0.0"
 description = "Automatic filling of SQL database"
 authors = ["Anton00756 <anton.komissarov.02@mail.ru>"]
-license = "Apache Software License"
+license = "MIT"
 readme = "README.md"
 repository = "https://github.com/Anton00756/Adjutant/db_data_gen"
 packages = [{ include = "db_data_gen", from = "src" }]
